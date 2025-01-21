@@ -1,0 +1,81 @@
+class Node:
+    def __init__(self, data):
+        self.data = data  # Data of the node
+        self.next = None  # Pointer to the next node
+
+class SinglyLinkedList:
+    def __init__(self):
+        self.head = None  # Initialize the head of the list
+
+    def insert_at_end(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+        else:
+            temp = self.head
+            while temp.next:
+                temp = temp.next
+            temp.next = new_node
+
+    def insert_at_beginning(self, data):
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+
+    def delete_node(self, key):
+        temp = self.head
+
+        # If the head node itself holds the key
+        if temp and temp.data == key:
+            self.head = temp.next
+            temp = None
+            return
+
+        # Search for the key to be deleted
+        prev = None
+        while temp and temp.data != key:
+            prev = temp
+            temp = temp.next
+
+        # If the key is not present in the list
+        if temp is None:
+            print(f"Node with data {key} not found.")
+            return
+
+        # Unlink the node from the list
+        prev.next = temp.next
+        temp = None
+
+    def display(self):
+        if not self.head:
+            print("The list is empty.")
+            return
+
+        temp = self.head
+        while temp:
+            print(temp.data, end=" -> ")
+            temp = temp.next
+        print("None")
+
+# Example usage
+if __name__ == "__main__":
+    sll = SinglyLinkedList()
+
+    # Insert elements
+    sll.insert_at_end(10)
+    sll.insert_at_end(20)
+    sll.insert_at_end(30)
+
+    # Display the list
+    print("Linked List after inserting at the end:")
+    sll.display()
+
+    # Insert at the beginning
+    sll.insert_at_beginning(5)
+    print("Linked List after inserting at the beginning:")
+    sll.display()
+
+    # Delete a node
+    sll.delete_node(20)
+    print("Linked List after deleting 20:")
+    sll.display()
